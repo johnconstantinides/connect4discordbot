@@ -3,30 +3,33 @@ from typing import List
 
 def print_board(board) -> str:
     line = f"""
-    {board[0]}{board[1]}{board[2]}{board[3]}{board[4]}{board[5]}{board[6]}
-{board[7]}{board[8]}{board[9]}{board[10]}{board[11]}{board[12]}{board[13]}
-{board[14]}{board[15]}{board[16]}{board[17]}{board[18]}{board[19]}{board[20]}
-{board[21]}{board[22]}{board[23]}{board[24]}{board[25]}{board[26]}{board[27]}
-{board[28]}{board[29]}{board[30]}{board[31]}{board[32]}{board[33]}{board[34]}
-{board[35]}{board[36]}{board[37]}{board[38]}{board[39]}{board[40]}{board[41]}
+    {board[0][0]}{board[0][1]}{board[0][2]}{board[0][3]}{board[0][4]}{board[0][5]}{board[0][6]}
+{board[1][0]}{board[1][1]}{board[1][2]}{board[1][3]}{board[1][4]}{board[1][5]}{board[1][6]}
+{board[2][0]}{board[2][1]}{board[2][2]}{board[2][3]}{board[2][4]}{board[2][5]}{board[2][6]}
+{board[3][0]}{board[3][1]}{board[3][2]}{board[3][3]}{board[3][4]}{board[3][5]}{board[3][6]}
+{board[4][0]}{board[4][1]}{board[4][2]}{board[4][3]}{board[4][4]}{board[4][5]}{board[4][6]}
+{board[5][0]}{board[5][1]}{board[5][2]}{board[5][3]}{board[5][4]}{board[5][5]}{board[5][6]}
     """
     return line
 
-def has_won(board,place,piece) -> bool:
+def has_won(board,column,row,piece) -> bool:
 
     #vertical check
-    row = place % 7
     for i in range(3):
-        if board[i * 7 + row] == piece and board[i * 7 +row +7] == piece and board[i * 7 +row+14] == piece and board[i * 7+row+21] == piece:
+        if board[i][column] == piece and board[i + 1][column] == piece and board[i + 2][column] == piece and board[i + 3][column] == piece:
             return True
-
     #horizontal check
-    column = place // 7
-    column = column * 7
     for i in range(4):
-        if board[i + column] == piece and board[i + column + 1] == piece and board[i + column + 2] == piece and board[i + column +3] == piece:
+        if board[row][i] == piece and board[row][i + 1] == piece and board[row][i + 2] == piece and board[row][i + 3] == piece:
                 return True
     
     #diagonal check
+    if(row >= 3):
+        if(column <=3):
+            if board[row][column] == piece and board[row-1][column-1] == piece and board[row-2][column-2] == piece and board[row - 3][column - 3] == piece:
+                return True
+        if(column >= 3):
+            return True
+
 
     return False

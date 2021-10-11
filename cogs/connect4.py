@@ -23,12 +23,12 @@ class connect_4(commands.Cog):
 
         if self.gameOn:
 
-            self.board = [":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",
-                ":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",
-                ":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",
-                ":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",
-                ":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",
-                ":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",
+            self.board = [[":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:"],
+                [":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:"],
+                [":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:"],
+                [":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:"],
+                [":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:"],
+                [":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:",":white_circle:"]
             ]
             
             await ctx.send(f'{self.player1.mention} It is your turn.')
@@ -59,21 +59,21 @@ class connect_4(commands.Cog):
                 i = 0
                 j = -1
                 #loops throw column to see if there is space
-                for i in range(move,35+move+1,7):
-                    if self.board[i] == ':white_circle:':
+                for i in range(6):
+                    if self.board[i][move] == ':white_circle:':
                         j = i
                 #if j isnt -1 then column is not full
                 if j != -1:
                     #checks if move is made by player one and if so it places a yellow circle
                     if self.player1 == self.turn:
-                        self.board[j] = ':yellow_circle:'
+                        self.board[j][move] = ':yellow_circle:'
                         line = helper.print_board(self.board)
                         myembed =  discord.Embed(title = 'Connect 4', description = line,color =808080)
                         #displays the board
                         await ctx.send(embed = myembed)
                         self.turn = self.player2
                         #chekcs if player has won the game
-                        win = helper.has_won(self.board,j,':yellow_circle:')
+                        win = helper.has_won(self.board,move,j,':yellow_circle:')
                         print(j)
                         if win == True:
                             await ctx.send(f'{self.player1.mention} has won')
@@ -82,13 +82,13 @@ class connect_4(commands.Cog):
                             print('cock')
                     #checks if move is made by player two and if so it places a red circle
                     elif self.player2 == self.turn:
-                        self.board[j] = ":red_circle:"
+                        self.board[j][move] = ":red_circle:"
                         line = helper.print_board(self.board)
                         myembed =  discord.Embed(title = 'Connect 4', description = line,color =808080)
                         #displays the board
                         await ctx.send(embed = myembed)
                         self.turn = self.player1
-                        win = helper.has_won(self.board,j,':red_circle:')
+                        win = helper.has_won(self.board,move,j,':red_circle:')
                         print(j)
                         if win == True:
                             await ctx.send(f'{self.player2.mention} has won')
