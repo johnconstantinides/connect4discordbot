@@ -24,12 +24,30 @@ def has_won(board,column,row,piece) -> bool:
                 return True
     
     #diagonal check
-    if(row >= 3):
-        if(column <=3):
-            if board[row][column] == piece and board[row-1][column-1] == piece and board[row-2][column-2] == piece and board[row - 3][column - 3] == piece:
-                return True
-        if(column >= 3):
-            return True
+    # if(row >= 3):
+    #     if(column <=3):
+    #         if board[row][column] == piece and board[row-1][column-1] == piece and board[row-2][column-2] == piece and board[row - 3][column - 3] == piece:
+    #             return True
+    #     if(column >= 3):
+    #         if board[row][column] == piece and board[row-1][column-1] == piece and board[row-2][column-2] == piece and board[row - 3][column - 3] == piece:
+    #             return True
 
+    #basically splits the board into 4 quandrants and checks a diagonal
+    #checks left diagonals from top left part of board
+    if row <=3 and column < 3:
+        if board[row][column] == piece and board[row + 1][column + 1] == piece and board[row + 2][column + 2] == piece and board[row + 3][column + 3] == piece:
+            return True
+    #checks right diagonals from top right part of board
+    if row >= 3 and column < 3:
+        if board[row][column] == piece and board[row - 1][column + 1] == piece and board[row - 2][column + 2] == piece and board[row - 3][column + 3] == piece:
+            return True   
+    #checks right diagonals from bottom left part of board
+    if row <= 3 and column > 2:
+        if board[row][column] == piece and board[row + 1][column - 1] == piece and board[row + 2][column - 2] == piece and board[row + 3][column - 3] == piece:
+            return True
+    #chekcs left diagonals from bottom right part of board
+    if row >= 3 and column > 2:
+        if board[row][column] == piece and board[row - 1][column - 1] == piece and board[row - 2][column - 2] == piece and board[row - 3][column - 3] == piece:
+            return True
 
     return False
