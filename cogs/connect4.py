@@ -17,9 +17,13 @@ class connect_4(commands.Cog):
         self.player1 = p1 
         board = [] 
         self.player2 = ctx.author
-
-        self.gameOn = True
-        self.turn = p1
+        if self.player1 == self.player2:
+            await ctx.send(f'You cannot play connect 4 with yourself')
+        elif self.player1.bot:
+            await ctx.send(f'You cannot play with a bot')
+        else:
+            self.gameOn = True
+            self.turn = p1
 
         if self.gameOn:
 
