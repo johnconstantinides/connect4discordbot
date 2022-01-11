@@ -12,42 +12,70 @@ def print_board(board) -> str:
     """
     return line
 
-def has_won(board,column,row,piece) -> bool:
+def has_won(board,row,column,piece) -> bool:
 
     #vertical check
     for i in range(3):
-        if board[i][column] == piece and board[i + 1][column] == piece and board[i + 2][column] == piece and board[i + 3][column] == piece:
+        if board[i][row] == piece and board[i + 1][row] == piece and board[i + 2][row] == piece and board[i + 3][row] == piece:
             return True
     #horizontal check
     for i in range(4):
-        if board[row][i] == piece and board[row][i + 1] == piece and board[row][i + 2] == piece and board[row][i + 3] == piece:
+        if board[column][i] == piece and board[column][i + 1] == piece and board[column][i + 2] == piece and board[column][i + 3] == piece:
                 return True
     
-    #diagonal check
-    # if(row >= 3):
-    #     if(column <=3):
-    #         if board[row][column] == piece and board[row-1][column-1] == piece and board[row-2][column-2] == piece and board[row - 3][column - 3] == piece:
-    #             return True
-    #     if(column >= 3):
-    #         if board[row][column] == piece and board[row-1][column-1] == piece and board[row-2][column-2] == piece and board[row - 3][column - 3] == piece:
-    #             return True
 
-    #basically splits the board into 4 quandrants and checks a diagonal
-    #checks left diagonals from top left part of board
-    if row <=3 and column < 3:
-        if board[row][column] == piece and board[row + 1][column + 1] == piece and board[row + 2][column + 2] == piece and board[row + 3][column + 3] == piece:
-            return True
-    #checks right diagonals from top right part of board
-    if row >= 3 and column < 3:
-        if board[row][column] == piece and board[row - 1][column + 1] == piece and board[row - 2][column + 2] == piece and board[row - 3][column + 3] == piece:
-            return True   
-    #checks right diagonals from bottom left part of board
+
+    #split it up board into 4 quadrants where 2 quadrants over lap by the middle row
     if row <= 3 and column > 2:
-        if board[row][column] == piece and board[row + 1][column - 1] == piece and board[row + 2][column - 2] == piece and board[row + 3][column - 3] == piece:
-            return True
-    #chekcs left diagonals from bottom right part of board
-    if row >= 3 and column > 2:
-        if board[row][column] == piece and board[row - 1][column - 1] == piece and board[row - 2][column - 2] == piece and board[row - 3][column - 3] == piece:
-            return True
+        if row == 0 or column == 5:
+            if piece == board[column][row] == board[column -1][row +1] == board[column -2][row + 2] == board[column -3][row + 3]:
+                return True
+        else:
+            while row != 0 and column != 5:
+                row -= 1
+                column += 1
+            while row <=3 and column > 2:
+                if piece == board[column][row] == board[column -1][row +1] == board[column -2][row + 2] == board[column -3][row + 3]:
+                    return True
+                row += 1
+                column -= 1
+    elif row <= 3 and column < 3:
+        if row == 0 or column == 0:
+            if piece == board[column][row] == board[column + 1][row +1] == board[column + 2][row + 2] == board[column + 3][row + 3]:
+                return True
+        else:
+            while row !=0 and column != 0:
+                row -= 1
+                column -= 1
+            while row <= 2 and column < 3:
+                if piece == board[column][row] == board[column + 1][row +1] == board[column + 2][row + 2] == board[column + 3][row + 3]:
+                    return True
+                row += 1
+                column += 1
+    elif row >= 3 and column > 2:
+        if row == 6 or column == 5:
+            if piece == board[column][row] == board[column - 1][row - 1] == board[column - 2][row - 2] == board[column - 3][row - 3]:
+                return True
+        else:
+            while row != 6 and column != 5:
+                row += 1
+                column += 1
+            while row >= 3 and column > 2:
+                if piece == board[column][row] == board[column - 1][row - 1] == board[column - 2][row - 2] == board[column - 3][row - 3]:
+                    return True
+                row -= 1
+                column -= 1
+    elif row >=3 and column < 3:
+        if row == 6 or column == 0:
+            if piece == board[column][row] == board[column + 1][row - 1] == board[column + 2][row - 2] == board[column + 3][row - 3]:
+                return True
+        else:
+            while row != 6 and column !=0:
+                row += 1
+                column -= 1
+            while row >=3 and column < 3:
+                if piece == board[column][row] == board[column + 1][row - 1] == board[column + 2][row - 2] == board[column + 3][row - 3]:
+                    return True
+
 
     return False
