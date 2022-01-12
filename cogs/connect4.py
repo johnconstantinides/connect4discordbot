@@ -11,6 +11,7 @@ class connect_4(commands.Cog):
         self.player1 = ""
         self.player2 = ""
         self.turn = ""
+        self.count = 0
     
     @commands.command()
     async def c4(self,ctx, p1: discord.Member):
@@ -77,9 +78,13 @@ class connect_4(commands.Cog):
                         self.turn = self.player2
                         #chekcs if player has won the game
                         win = helper.has_won(self.board,move,j,':yellow_circle:')
+                        self.count += 1
                         if win == True:
                             await ctx.send(f'{self.player1.mention} has won')
                             self.gameOn = False
+                        elif self.count == 42:
+                            self.gameOn = False
+                            await ctx.send(f'Tie Game')
 
                     #checks if move is made by player two and if so it places a red circle
                     elif self.player2 == self.turn:
@@ -90,13 +95,18 @@ class connect_4(commands.Cog):
                         await ctx.send(embed = myembed)
                         self.turn = self.player1
                         win = helper.has_won(self.board,move,j,':red_circle:')
+                        self.count += 1
                         if win == True:
                             await ctx.send(f'{self.player2.mention} has won')
                             self.gameOn = False
+                        elif self.count == 42:
+                                await ctx.send(f'Tie Game')
+                                self.gameOn = False
                     else:
                         await ctx.send(f'That row is full pls try another move')
+                        
                 else:
-                    await ctx.send('That column is full')
+                    await ctx.send('That row is full')
         
 
 def setup(bot):

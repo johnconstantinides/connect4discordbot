@@ -12,4 +12,4 @@ async def on_ready():
 client.load_extension("cogs.connect4")
 
 
-client.run('ODQ3NjYwNDk3MjU2MTg1ODc3.YLBTWw.3-wP7sIl2mYB9efVC4_JdvF9Rv0')
+client.run(key)
